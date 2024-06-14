@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
                 });
-            }, cellIndex * 2000);
+            }, cellIndex * 2300);
         }
     });
 });
