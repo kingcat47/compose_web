@@ -69,19 +69,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('play').addEventListener('click', () => {
-        const tableCells = document.querySelectorAll('#drag td'); // 변경된 부분: 모든 셀(td)을 선택합니다.
-        const numRows = document.querySelectorAll('#drag tr').length; // 추가된 부분: 테이블의 전체 행 개수를 가져옵니다.
-    
-        tableCells.forEach((cell, cellIndex) => {
+        const rows = ['#guitarlist', '#pianolist', '#drumlist', '#baselist'];
+        const maxCells = document.querySelectorAll('#drag tr')[0].children.length;
+
+        for (let cellIndex = 0; cellIndex < maxCells; cellIndex++) {
             setTimeout(() => {
-                const audioId = cell.getAttribute('data-audio-id');
-                if (audioId) {
-                    const audioElement = document.getElementById(audioId);
-                    if (audioElement) {
-                        audioElement.play();
+                rows.forEach(rowSelector => {
+                    const cell = document.querySelector(`${rowSelector} td:nth-child(${cellIndex + 1})`);
+                    if (cell) {
+                        const audioId = cell.getAttribute('data-audio-id');
+                        if (audioId) {
+                            const audioElement = document.getElementById(audioId);
+                            if (audioElement) {
+                                audioElement.play();
+                            }
+                        }
                     }
-                }
-            }, (cellIndex % numRows) * 2100); // 변경된 부분: 열 인덱스(cellIndex)를 전체 행 수(numRows)로 나누어 계산하여 세로 방향으로 재생되도록 합니다.
-        });
+                });
+            }, cellIndex * 2000);
+        }
     });
 });
